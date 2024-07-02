@@ -26,10 +26,6 @@ jobs:
         with:
           repository: 'espeak-ng/pcaudiolib'
           path: 'src/pcaudiolib'
-      # - name: Add BOM
-      #   shell: pwsh 
-      #   working-directory: src/libespeak-ng
-      #   run: Get-Content tr_languages.c | Out-File -Encoding utf8BOM tr_languages.c
       - run: msbuild espeak-ng.sln
         working-directory: "src/windows"
       - uses: actions/upload-artifact@v4
