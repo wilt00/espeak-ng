@@ -10,12 +10,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    name: "build: ${{ matrix.arch }} ${{ matrix.config }} ${{ matrix.link }}"
-    strategy:
-      fail-fast: false
-      matrix:
-        arch: [Win32, x64]
-        config: [Debug, Release]
+    name: "build"
 
     steps:
       - uses: microsoft/setup-msbuild@v2
