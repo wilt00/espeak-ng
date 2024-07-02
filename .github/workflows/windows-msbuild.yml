@@ -26,4 +26,8 @@ jobs:
         with:
           repository: 'espeak-ng/pcaudiolib'
           path: 'src/pcaudiolib'
-      - run: msbuild src/windows/espeak-ng.sln
+      - run: msbuild espeak-ng.sln
+        working-directory: "src/windows"
+      - uses: actions/upload-artifact@v4
+        with:
+          path: "src/windows/installer/bin/x64/Debug/espeak-ng.msi"
