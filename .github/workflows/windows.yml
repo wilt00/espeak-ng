@@ -31,3 +31,8 @@ jobs:
         run: cmake --build build --config ${{ matrix.config }}
       - name: make check
         run: ctest --test-dir build -Ttest -C ${{ matrix.config }} -j8 --output-on-failure
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: "espeak-ng-win-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.link }}"
+          path: "D:\\a\\espeak-ng\\espeak-ng\\build\\src\\${{ matrix.config }}"
