@@ -1,0 +1,34 @@
+name: windows-msbuild
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    name: "build: ${{ matrix.arch }} ${{ matrix.config }} ${{ matrix.link }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [Win32, x64]
+        config: [Debug, Release]
+
+    steps:
+      - uses: microsoft/setup-msbuild@v2
+      - name: Install Windows 8.1 SDK
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Method Get -Uri https://go.microsoft.com/fwlink/p/?LinkId=323507 -OutFile sdksetup.exe -UseBasicParsing
+          Start-Process -Wait sdksetup.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
+      - name: Install WiX
+        run: dotnet tool install --global wix
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: 'espeak-ng/pcaudiolib'
+          path: 'src/pcaudiolib'
+      - run: msbuild src/windows/espeak-ng.sln
