@@ -24,10 +24,19 @@ jobs:
         - link: dll
           shlib: "ON"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: 'espeak-ng/pcaudiolib'
+          path: 'src/pcaudiolib'
       - name: configure
         run: cmake -Bbuild -DUSE_ASYNC:BOOL=OFF -DBUILD_SHARED_LIBS:BOOL=${{ matrix.shlib }} -A ${{ matrix.arch }}
       - name: make
         run: cmake --build build --config ${{ matrix.config }}
       - name: make check
         run: ctest --test-dir build -Ttest -C ${{ matrix.config }} -j8 --output-on-failure
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: "espeak-ng-win-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.link }}"
+          path: "build"
