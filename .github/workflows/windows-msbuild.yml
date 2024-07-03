@@ -3,17 +3,23 @@ name: windows-msbuild
 on:
   workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
     runs-on: windows-latest
-    name: "build"
+    name: "build: ${{ matrix.arch }} ${{ matrix.config }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x86, x64]
+        config: [Debug, Release]
 
     steps:
-      - uses: microsoft/setup-msbuild@v2
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
       - name: Install Windows 8.1 SDK
         shell: powershell
         run: |
@@ -21,13 +27,18 @@ jobs:
           Start-Process -Wait sdksetup.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
       - name: Install WiX
         run: dotnet tool install --global wix
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Checkout pcaudiolib
+        uses: actions/checkout@v4
         with:
-          repository: 'espeak-ng/pcaudiolib'
-          path: 'src/pcaudiolib'
-      - run: msbuild espeak-ng.sln
+          repository: "espeak-ng/pcaudiolib"
+          path: "src/pcaudiolib"
+      - name: Do build
         working-directory: "src/windows"
-      - uses: actions/upload-artifact@v4
+        run: msbuild espeak-ng.sln /p:Configuration=${{ matrix.config }} /p:Platform=${{ matrix.arch }}
+      - name: Upload MSI installer
+        uses: actions/upload-artifact@v4
         with:
+          name: windows-${{ matrix.arch }}-${{ matrix.config }}-msi
           path: "src/windows/installer/bin/x64/Debug/espeak-ng.msi"
