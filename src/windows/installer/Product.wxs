@@ -69,6 +69,9 @@
                 <Component Id="an_dict" Guid="398D043F-2306-4465-AF86-0E71B8919E82">
                     <File Id="an_dict" KeyPath="yes" Source="$(var.ProjectDir)\..\..\..\espeak-ng-data\an_dict" />
                 </Component>
+                <Component Id="ar_dict" Guid="DA018A76-E180-413D-A4FC-DC42822EE9DC">
+                    <File Id="ar_dict" KeyPath="yes" Source="$(var.ProjectDir)\..\..\..\espeak-ng-data\ar_dict" />
+                </Component>
                 <Component Id="as_dict" Guid="F414CBF2-A37F-4B20-8568-E02F0005E5AC">
                     <File Id="as_dict" KeyPath="yes" Source="$(var.ProjectDir)\..\..\..\espeak-ng-data\as_dict" />
                 </Component>
@@ -739,6 +742,9 @@
                     <Directory Id="sem" Name="sem">
                         <Component Id="am" Guid="6DC9AEC3-4C3F-4C46-B10A-765AEDFD95BE">
                             <File Id="am" KeyPath="yes" Source="$(var.ProjectDir)\..\..\..\espeak-ng-data\lang\sem\am" />
+                        </Component>
+                        <Component Id="ar" Guid="B7B2CAC1-7B02-4F3D-BA32-D278439278A1">
+                            <File Id="ar" KeyPath="yes" Source="$(var.ProjectDir)\..\..\..\espeak-ng-data\lang\sem\ar" />
                         </Component>
                         <Component Id="he" Guid="40CD0730-60BE-4B57-89B7-AFCF1215D717">
                             <File Id="he" KeyPath="yes" Source="$(var.ProjectDir)\..\..\..\espeak-ng-data\lang\sem\he" />
@@ -1465,6 +1471,7 @@
       <ComponentRef Id="af_dict" />
       <ComponentRef Id="am_dict" />
       <ComponentRef Id="an_dict" />
+      <ComponentRef Id="ar_dict" />
       <ComponentRef Id="as_dict" />
       <ComponentRef Id="az_dict" />
       <ComponentRef Id="ba_dict" />
@@ -1671,6 +1678,7 @@
       <ComponentRef Id="ro" />
       <ComponentRef Id="gn" />
       <ComponentRef Id="am" />
+      <ComponentRef Id="ar" />
       <ComponentRef Id="he" />
       <ComponentRef Id="mt" />
       <ComponentRef Id="cmn" />
